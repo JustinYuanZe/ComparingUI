@@ -1,14 +1,14 @@
 <template>
-  <v-container>
+  <v-container class="py-4">
     <v-row justify="center">
-      <v-col cols="12" md="10">
-        <v-card class="pa-6" elevation="4">
-          <v-card-title class="text-h4 text-center mb-4">
-            <v-icon left color="primary">mdi-account-edit</v-icon>
+      <v-col cols="12" md="8">
+        <v-card class="pa-4" elevation="2">
+          <v-card-title class="text-h6 text-center pb-2">
+            <v-icon left color="primary" size="small">mdi-account-edit</v-icon>
             {{ $t('profile.title') }}
           </v-card-title>
 
-          <v-card-subtitle class="text-center mb-4">
+          <v-card-subtitle class="text-center pb-3 text-caption">
             {{ $t('profile.subtitle', { username: user?.username, department: user?.department }) }}
           </v-card-subtitle>
 
@@ -16,7 +16,7 @@
             <v-row>
               <!-- Identity & Gender -->
               <v-col cols="12" md="6">
-                <v-radio-group v-model="profile.identity" :label="$t('profile.identity')" row>
+                <v-radio-group v-model="profile.identity" :label="$t('profile.identity')" row density="compact">
                   <v-radio :label="$t('profile.student')" value="student"></v-radio>
                   <v-radio :label="$t('profile.unemployed')" value="Unemployed"></v-radio>
                   <v-radio :label="$t('profile.employed')" value="employed"></v-radio>
@@ -24,7 +24,7 @@
               </v-col>
 
               <v-col cols="12" md="6">
-                <v-radio-group v-model="profile.gender" :label="$t('profile.gender')" row>
+                <v-radio-group v-model="profile.gender" :label="$t('profile.gender')" row density="compact">
                   <v-radio :label="$t('profile.female')" value="female"></v-radio>
                   <v-radio :label="$t('profile.male')" value="male"></v-radio>
                 </v-radio-group>
@@ -37,6 +37,7 @@
                   :label="$t('profile.accountNumber')"
                   prepend-icon="mdi-account-box"
                   variant="outlined"
+                  density="compact"
                 ></v-text-field>
               </v-col>
 
@@ -46,12 +47,13 @@
                   :label="$t('profile.fullName')"
                   prepend-icon="mdi-account"
                   variant="outlined"
+                  density="compact"
                 ></v-text-field>
               </v-col>
 
               <!-- Date of Birth -->
               <v-col cols="12">
-                <label class="text-subtitle-2 mb-2 d-block">{{ $t('profile.dateOfBirth') }}</label>
+                <label class="text-caption mb-1 d-block">{{ $t('profile.dateOfBirth') }}</label>
                 <v-row dense>
                   <v-col cols="4">
                     <v-select
@@ -92,6 +94,7 @@
                   type="email"
                   :rules="emailRules"
                   variant="outlined"
+                  density="compact"
                 ></v-text-field>
               </v-col>
 
@@ -101,13 +104,14 @@
                   :label="$t('profile.mobilePhone')"
                   prepend-icon="mdi-phone"
                   variant="outlined"
+                  density="compact"
                 ></v-text-field>
               </v-col>
 
               <!-- Enrollment Information -->
               <v-col cols="12">
-                <v-divider class="my-4"></v-divider>
-                <h3 class="text-h6 mb-3">{{ $t('profile.enrollmentInfo') }}</h3>
+                <v-divider class="my-3"></v-divider>
+                <h3 class="text-body-1 font-weight-bold mb-2">{{ $t('profile.enrollmentInfo') }}</h3>
               </v-col>
 
               <v-col cols="12" md="6">
@@ -117,6 +121,7 @@
                   :label="$t('profile.enrollmentYear')"
                   prepend-icon="mdi-calendar"
                   variant="outlined"
+                  density="compact"
                 ></v-select>
               </v-col>
 
@@ -127,6 +132,7 @@
                   :label="$t('profile.enrollmentLevel')"
                   prepend-icon="mdi-school"
                   variant="outlined"
+                  density="compact"
                 ></v-select>
               </v-col>
 
@@ -137,6 +143,7 @@
                   :label="$t('profile.schoolCity')"
                   prepend-icon="mdi-city"
                   variant="outlined"
+                  density="compact"
                 ></v-text-field>
               </v-col>
 
@@ -146,6 +153,7 @@
                   :label="$t('profile.schoolName')"
                   prepend-icon="mdi-school-outline"
                   variant="outlined"
+                  density="compact"
                 ></v-text-field>
               </v-col>
 
@@ -157,6 +165,7 @@
                   :label="$t('profile.durationOfStudy')"
                   prepend-icon="mdi-book-open-page-variant"
                   variant="outlined"
+                  density="compact"
                 ></v-select>
               </v-col>
 
@@ -166,6 +175,7 @@
                   :label="$t('profile.departmentInstitute')"
                   prepend-icon="mdi-domain"
                   variant="outlined"
+                  density="compact"
                 ></v-text-field>
               </v-col>
 
@@ -176,6 +186,7 @@
                   :label="$t('profile.yearClass')"
                   prepend-icon="mdi-counter"
                   variant="outlined"
+                  density="compact"
                 ></v-select>
               </v-col>
 
@@ -185,16 +196,18 @@
                   :label="$t('profile.studentId')"
                   prepend-icon="mdi-card-account-details"
                   variant="outlined"
+                  density="compact"
                 ></v-text-field>
               </v-col>
 
               <!-- Actions -->
               <v-col cols="12">
-                <v-card-actions class="justify-center mt-4">
+                <v-card-actions class="justify-center mt-3">
                   <v-btn
                     color="secondary"
                     :to="{ name: 'Home' }"
                     prepend-icon="mdi-arrow-left"
+                    size="small"
                   >
                     {{ $t('common.back') }}
                   </v-btn>
@@ -205,6 +218,7 @@
                     prepend-icon="mdi-content-save"
                     class="ml-4"
                     :loading="loading"
+                    size="small"
                   >
                     {{ loading ? $t('profile.saving') : $t('profile.saveChanges') }}
                   </v-btn>

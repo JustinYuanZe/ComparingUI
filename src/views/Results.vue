@@ -1,18 +1,18 @@
 <template>
-  <v-container>
+  <v-container class="py-4">
     <v-row justify="center">
       <v-col cols="12" md="10">
-        <v-card class="pa-6" elevation="4">
-          <v-card-title class="text-h4 text-center mb-6">
-            <v-icon left color="success">mdi-chart-line</v-icon>
+        <v-card class="pa-4" elevation="2">
+          <v-card-title class="text-h6 text-center mb-4">
+            <v-icon left color="success" size="small">mdi-chart-line</v-icon>
             {{ $t('results.title') }}
           </v-card-title>
 
           <div v-if="results">
             <!-- Career Recommendations -->
-            <v-card class="mb-6" elevation="2">
-              <v-card-title class="bg-success text-white">
-                <v-icon left>mdi-star</v-icon>
+            <v-card class="mb-4" elevation="1">
+              <v-card-title class="bg-success text-white py-2 text-body-1">
+                <v-icon left size="small">mdi-star</v-icon>
                 {{ $t('results.recommendationsTitle') }}
               </v-card-title>
               <v-card-text class="pa-0">
@@ -32,17 +32,15 @@
                       </div>
                     </v-expansion-panel-title>
                     <v-expansion-panel-text>
-                      <div class="pa-4">
-                        <p class="mb-4">{{ recommendation.description }}</p>
-                        <h4 class="mb-3">{{ $t('results.specificCareers') }}</h4>
-                        <v-row>
-                          <v-col cols="12" md="6" v-for="career in recommendation.careers" :key="career">
-                            <v-card class="pa-3" elevation="1" color="grey-lighten-5">
-                              <div class="d-flex align-center">
-                                <v-icon left color="primary">mdi-briefcase</v-icon>
-                                <span class="font-weight-medium">{{ career }}</span>
-                              </div>
-                            </v-card>
+                      <div class="pa-3">
+                        <p class="mb-3 text-body-2">{{ recommendation.description }}</p>
+                        <h4 class="mb-2 text-body-2 font-weight-bold">{{ $t('results.specificCareers') }}</h4>
+                        <v-row dense>
+                          <v-col cols="6" md="4" v-for="career in recommendation.careers" :key="career">
+                            <v-chip size="small" color="grey-lighten-3" class="w-100 justify-start">
+                              <v-icon start size="x-small" color="primary">mdi-briefcase</v-icon>
+                              {{ career }}
+                            </v-chip>
                           </v-col>
                         </v-row>
                       </div>
@@ -53,67 +51,65 @@
             </v-card>
 
             <!-- Skills Match Analysis -->
-            <v-card class="mb-6" elevation="2">
-              <v-card-title class="bg-info text-white">
-                <v-icon left>mdi-target</v-icon>
+            <v-card class="mb-4" elevation="1">
+              <v-card-title class="bg-info text-white py-2 text-body-1">
+                <v-icon left size="small">mdi-target</v-icon>
                 {{ $t('results.scoreAnalysisTitle') }}
               </v-card-title>
-              <v-card-text class="pa-4">
-                <div v-for="(recommendation, index) in results.topRecommendations" :key="index" class="mb-4">
-                  <h4 class="mb-2">{{ recommendation.title }}</h4>
+              <v-card-text class="pa-3">
+                <div v-for="(recommendation, index) in results.topRecommendations" :key="index" class="mb-3">
                   <div class="d-flex justify-space-between mb-1">
-                    <span>{{ $t('results.compatibility') }}</span>
-                    <span>{{ getPercentage(recommendation.score, recommendation.maxScore) }}%</span>
+                    <span class="text-body-2">{{ recommendation.title }}</span>
+                    <span class="text-body-2 font-weight-bold">{{ getPercentage(recommendation.score, recommendation.maxScore) }}%</span>
                   </div>
                   <v-progress-linear 
                     :model-value="getPercentage(recommendation.score, recommendation.maxScore)"
                     :color="getScoreColor(index)" 
-                    height="8"
+                    height="6"
                   ></v-progress-linear>
                 </div>
               </v-card-text>
             </v-card>
 
             <!-- Recommendations for Improvement -->
-            <v-card class="mb-6" elevation="2">
-              <v-card-title class="bg-orange text-white">
-                <v-icon left>mdi-lightbulb</v-icon>
+            <v-card class="mb-4" elevation="1">
+              <v-card-title class="bg-orange text-white py-2 text-body-1">
+                <v-icon left size="small">mdi-lightbulb</v-icon>
                 {{ $t('results.developmentTitle') }}
               </v-card-title>
-              <v-card-text class="pa-4">
-                <v-alert type="info" variant="tonal" class="mb-4">
-                  {{ $t('results.developmentIntro') }}
-                </v-alert>
-
-                <v-list>
-                  <v-list-item v-for="(tip, index) in developmentTips" :key="index" prepend-icon="mdi-check-circle">
-                    <v-list-item-title>{{ tip }}</v-list-item-title>
+              <v-card-text class="pa-3">
+                <v-list density="compact" class="py-0">
+                  <v-list-item v-for="(tip, index) in developmentTips" :key="index" class="px-0">
+                    <template v-slot:prepend>
+                      <v-icon size="small" color="success">mdi-check-circle</v-icon>
+                    </template>
+                    <v-list-item-title class="text-body-2">{{ tip }}</v-list-item-title>
                   </v-list-item>
                 </v-list>
               </v-card-text>
             </v-card>
 
             <!-- Action Buttons -->
-            <v-card-actions class="justify-center">
-              <v-btn color="secondary" :to="{ name: 'CareerTest' }" prepend-icon="mdi-refresh">
+            <v-card-actions class="justify-center flex-wrap">
+              <v-btn color="secondary" size="small" :to="{ name: 'CareerTest' }" prepend-icon="mdi-refresh" class="ma-1">
                 {{ $t('results.retakeTest') }}
               </v-btn>
 
-              <v-btn color="primary" @click="downloadResults" prepend-icon="mdi-download" class="ml-4">
+              <v-btn color="primary" size="small" @click="downloadResults" prepend-icon="mdi-download" class="ma-1">
                 {{ $t('results.downloadResults') }}
               </v-btn>
 
-              <v-btn color="success" :to="{ name: 'Home' }" prepend-icon="mdi-home" class="ml-4">
+              <v-btn color="success" size="small" :to="{ name: 'Home' }" prepend-icon="mdi-home" class="ma-1">
                 {{ $t('results.goHome') }}
               </v-btn>
             </v-card-actions>
           </div>
 
-          <div v-else class="text-center">
-            <v-icon color="warning" size="64">mdi-alert</v-icon>
-            <h3 class="text-h5 mt-4 mb-4">{{ $t('results.noResults') }}</h3>
-            <p class="mb-4">{{ $t('results.noResultsDesc') }}</p>
-            <v-btn color="primary" :to="{ name: 'CareerTest' }" prepend-icon="mdi-clipboard-list">
+          <div v-else class="text-center py-4">
+            <v-icon color="warning" size="48">mdi-alert</v-icon>
+            <h3 class="text-h6 mt-3 mb-3">{{ $t('results.noResults') }}</h3>
+            <p class="text-body-2 mb-3">{{ $t('results.noResultsDesc') }}</p>
+            <v-btn color="primary" size="small" :to="{ name: 'CareerTest' }" prepend-icon="mdi-clipboard-list">
               {{ $t('results.takeTest') }}
             </v-btn>
           </div>

@@ -5,27 +5,27 @@
       v-if="!isOpen"
       class="chatbot-toggle-btn"
       color="primary"
-      size="large"
+      size="default"
       icon
-      elevation="6"
+      elevation="4"
       @click="toggleChat"
     >
-      <v-icon size="28">mdi-chat</v-icon>
+      <v-icon size="22">mdi-chat</v-icon>
     </v-btn>
 
     <!-- Chat Window -->
     <v-card
       v-if="isOpen"
       class="chatbot-window"
-      elevation="12"
-      width="400"
-      height="600"
+      elevation="8"
+      width="340"
+      height="480"
     >
       <!-- Header -->
-      <v-card-title class="chatbot-header d-flex align-center justify-space-between">
+      <v-card-title class="chatbot-header d-flex align-center justify-space-between py-2 px-3">
         <div class="d-flex align-center">
-          <v-icon color="white" class="mr-2">mdi-robot-happy</v-icon>
-          <span class="text-white font-weight-bold">{{ $t('chatbot.title') }}</span>
+          <v-icon color="white" size="small" class="mr-2">mdi-robot-happy</v-icon>
+          <span class="text-white text-body-2 font-weight-bold">{{ $t('chatbot.title') }}</span>
         </div>
         <div>
           <v-btn
@@ -532,7 +532,7 @@ export default {
 .chatbot-header {
   background: linear-gradient(135deg, #1565C0 0%, #0D47A1 100%);
   color: white;
-  padding: 16px;
+  min-height: 44px;
 }
 
 .chatbot-messages {
@@ -690,9 +690,9 @@ export default {
 /* Responsive */
 @media (max-width: 600px) {
   .chatbot-window {
-    width: calc(100vw - 48px);
-    height: calc(100vh - 120px);
-    max-width: 400px;
+    width: calc(100vw - 32px);
+    height: calc(100vh - 100px);
+    max-width: 360px;
     max-height: 600px;
   }
   

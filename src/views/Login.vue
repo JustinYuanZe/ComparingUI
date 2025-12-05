@@ -1,19 +1,21 @@
 <template>
-  <v-container class="fill-height">
+  <v-container class="py-4">
     <v-row justify="center" align="center">
-      <v-col cols="12" sm="8" md="4">
-        <v-card class="elevation-12">
-          <v-toolbar color="primary" dark flat>
-            <v-toolbar-title>{{ $t('auth.loginTitle') }}</v-toolbar-title>
-          </v-toolbar>
-          <v-card-text>
-            <p class="text-body-2 text-grey mb-4">{{ $t('auth.loginSubtitle') }}</p>
+      <v-col cols="12" sm="8" md="5" lg="4">
+        <v-card elevation="2">
+          <div class="bg-primary pa-3 text-center">
+            <span class="text-white text-body-1 font-weight-bold">{{ $t('auth.loginTitle') }}</span>
+          </div>
+          <v-card-text class="pa-4">
+            <p class="text-body-2 text-grey mb-3">{{ $t('auth.loginSubtitle') }}</p>
             <v-form @submit.prevent="handleLogin">
               <v-text-field 
                 v-model="username" 
                 :label="$t('auth.username')" 
                 prepend-icon="mdi-account" 
                 type="text"
+                density="compact"
+                variant="outlined"
                 required
               ></v-text-field>
               <v-text-field 
@@ -21,17 +23,19 @@
                 :label="$t('auth.password')" 
                 prepend-icon="mdi-lock" 
                 type="password"
+                density="compact"
+                variant="outlined"
                 required
               ></v-text-field>
               <div class="text-center mt-3">
-                <v-btn color="primary" type="submit" :loading="loading" block size="large">
+                <v-btn color="primary" type="submit" :loading="loading" block>
                   {{ loading ? $t('auth.loggingIn') : $t('auth.loginButton') }}
                 </v-btn>
               </div>
             </v-form>
-            <div class="text-center mt-4">
-              <span class="text-grey">{{ $t('auth.noAccount') }}</span>
-              <router-link to="/register" class="ml-1">{{ $t('auth.registerNow') }}</router-link>
+            <div class="text-center mt-3">
+              <span class="text-caption text-grey">{{ $t('auth.noAccount') }}</span>
+              <router-link to="/register" class="ml-1 text-caption">{{ $t('auth.registerNow') }}</router-link>
             </div>
           </v-card-text>
         </v-card>

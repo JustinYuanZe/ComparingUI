@@ -650,7 +650,7 @@ const app = new Elysia()
       const userLang = context?.user?.lang || 'en'
       let errorMessage = 'Chatbot is not configured. Please contact the administrator.'
       if (userLang === 'zh-TW') {
-        errorMessage = '聊天機器人尚未設定。請聯繫管理員。'
+        errorMessage = 'AI 顧問尚未設定完成，請聯繫管理員。'
       } else if (userLang === 'vi') {
         errorMessage = 'Chatbot chưa được cấu hình. Vui lòng liên hệ quản trị viên.'
       }
@@ -743,7 +743,7 @@ const app = new Elysia()
       const userLang = context?.user?.lang || 'en'
       let errorMessage = 'Sorry, an error occurred while processing your request. Please try again later.'
       if (userLang === 'zh-TW') {
-        errorMessage = '抱歉，處理您的請求時發生錯誤。請稍後再試。'
+        errorMessage = '抱歉，處理過程中發生錯誤，請稍後再試。'
       } else if (userLang === 'vi') {
         errorMessage = 'Xin lỗi, đã xảy ra lỗi khi xử lý yêu cầu của bạn. Vui lòng thử lại sau.'
       }

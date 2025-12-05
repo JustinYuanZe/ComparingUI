@@ -1,74 +1,106 @@
 <template>
-  <v-container>
+  <v-container class="py-4">
     <v-row justify="center">
-      <v-col cols="12" md="8">
-        <v-card class="pa-6" elevation="4">
-          <v-card-title class="text-h4 text-center mb-4">
-            <v-icon left color="primary">mdi-clipboard-list</v-icon>
-            {{ $t('test.title') }}
-          </v-card-title>
-
-          <v-card-subtitle class="text-center mb-4">
-            {{ $t('test.questionOf', { current: currentQuestion + 1, total: questions.length }) }}
-          </v-card-subtitle>
-
-          <v-progress-linear :model-value="progress" color="primary" height="8" class="mb-6"></v-progress-linear>
-
-          <div v-if="loading" class="text-center py-8">
-            <v-progress-circular indeterminate color="primary"></v-progress-circular>
-            <p class="mt-4">{{ $t('test.loadingQuestions') }}</p>
+      <v-col cols="12" sm="10" md="8" lg="6">
+        <v-card class="test-card" elevation="3">
+          <!-- Header -->
+          <div class="test-header pa-4 text-center">
+            <v-icon color="white" size="28">mdi-clipboard-list</v-icon>
+            <h1 class="text-h6 font-weight-bold text-white mt-2">{{ $t('test.title') }}</h1>
+            <div class="text-body-2 text-white opacity-80 mt-1">
+              {{ $t('test.questionOf', { current: currentQuestion + 1, total: questions.length }) }}
+            </div>
           </div>
 
-          <div v-else-if="!showResults && questions.length > 0">
-            <!-- Part Header -->
-            <v-alert v-if="showPartHeader" type="info" variant="tonal" class="mb-4">
-              <div class="font-weight-bold">{{ $t('test.part', { number: questions[currentQuestion].part }) }}: {{ questions[currentQuestion].partTitle }}</div>
-              <div class="text-body-2 mt-1">{{ questions[currentQuestion].partObjective }}</div>
-            </v-alert>
+          <!-- Progress -->
+          <v-progress-linear :model-value="progress" color="success" height="6" class="progress-bar"></v-progress-linear>
 
-            <v-card class="pa-4 mb-6" elevation="2">
-              <v-chip size="small" color="primary" class="mb-2">{{ questions[currentQuestion].id }}</v-chip>
-              <v-card-text class="text-h6">
-                {{ questions[currentQuestion].question }}
-              </v-card-text>
-            </v-card>
-
-            <div class="rating-scale mb-6">
-              <v-radio-group v-model="answers[questions[currentQuestion].id]" inline class="justify-center">
-                <div class="scale-options">
-                  <label v-for="option in translatedRatingOptions" :key="option.value" class="scale-option" :class="{ 'selected': answers[questions[currentQuestion].id] === option.value }">
-                    <v-radio :value="option.value" class="scale-radio"></v-radio>
-                    <span class="scale-text">{{ option.text }}</span>
-                  </label>
-                </div>
-              </v-radio-group>
+          <v-card-text class="pa-4">
+            <!-- Loading State -->
+            <div v-if="loading" class="text-center py-8">
+              <v-progress-circular indeterminate color="primary" size="40"></v-progress-circular>
+              <p class="mt-3 text-body-2 text-grey">{{ $t('test.loadingQuestions') }}</p>
             </div>
 
-            <v-card-actions class="justify-space-between">
-              <v-btn color="secondary" :disabled="currentQuestion === 0" @click="previousQuestion"
-                prepend-icon="mdi-arrow-left">
-                {{ $t('common.previous') }}
-              </v-btn>
+            <!-- Question Content -->
+            <div v-else-if="!showResults && questions.length > 0">
+              <!-- Part Header -->
+              <v-alert v-if="showPartHeader" type="info" variant="tonal" density="compact" class="mb-4">
+                <div class="text-body-2 font-weight-bold">
+                  {{ $t('test.part', { number: questions[currentQuestion].part }) }}: {{ questions[currentQuestion].partTitle }}
+                </div>
+              </v-alert>
 
-              <v-btn v-if="currentQuestion < questions.length - 1" color="primary" :disabled="answers[questions[currentQuestion].id] === undefined"
-                @click="nextQuestion" append-icon="mdi-arrow-right">
-                {{ $t('common.next') }}
-              </v-btn>
+              <!-- Question Card -->
+              <div class="question-box mb-5">
+                <v-chip size="x-small" color="primary" variant="flat" class="mb-2">
+                  {{ questions[currentQuestion].id }}
+                </v-chip>
+                <p class="question-text">{{ questions[currentQuestion].question }}</p>
+              </div>
 
-              <v-btn v-else color="success" :disabled="answers[questions[currentQuestion].id] === undefined" @click="finishTest"
-                prepend-icon="mdi-check">
-                {{ $t('test.complete') }}
-              </v-btn>
-            </v-card-actions>
-          </div>
+              <!-- Rating Options -->
+              <div class="rating-scale">
+                <v-radio-group v-model="answers[questions[currentQuestion].id]" class="ma-0">
+                  <div class="scale-options">
+                    <label 
+                      v-for="option in translatedRatingOptions" 
+                      :key="option.value" 
+                      class="scale-option" 
+                      :class="{ 'selected': answers[questions[currentQuestion].id] === option.value }"
+                      @click="answers[questions[currentQuestion].id] = option.value"
+                    >
+                      <v-radio :value="option.value" class="scale-radio" hide-details></v-radio>
+                      <span class="scale-text">{{ option.text }}</span>
+                    </label>
+                  </div>
+                </v-radio-group>
+              </div>
 
-          <div v-else-if="showResults" class="text-center">
-            <v-icon color="success" size="64">mdi-check-circle</v-icon>
-            <h3 class="text-h5 mt-4 mb-4">{{ $t('test.completed') }}</h3>
-            <v-btn color="primary" size="large" :to="{ name: 'Results' }" prepend-icon="mdi-chart-line">
-              {{ $t('test.viewResults') }}
-            </v-btn>
-          </div>
+              <!-- Navigation Buttons -->
+              <div class="d-flex justify-space-between mt-5">
+                <v-btn 
+                  variant="outlined" 
+                  color="grey-darken-1"
+                  :disabled="currentQuestion === 0" 
+                  @click="previousQuestion"
+                  prepend-icon="mdi-arrow-left"
+                >
+                  {{ $t('common.previous') }}
+                </v-btn>
+
+                <v-btn 
+                  v-if="currentQuestion < questions.length - 1" 
+                  color="primary"
+                  :disabled="answers[questions[currentQuestion].id] === undefined"
+                  @click="nextQuestion" 
+                  append-icon="mdi-arrow-right"
+                >
+                  {{ $t('common.next') }}
+                </v-btn>
+
+                <v-btn 
+                  v-else 
+                  color="success"
+                  :disabled="answers[questions[currentQuestion].id] === undefined" 
+                  @click="finishTest"
+                  prepend-icon="mdi-check"
+                >
+                  {{ $t('test.complete') }}
+                </v-btn>
+              </div>
+            </div>
+
+            <!-- Completion State -->
+            <div v-else-if="showResults" class="text-center py-6">
+              <v-icon color="success" size="56">mdi-check-circle</v-icon>
+              <h2 class="text-h6 mt-4 mb-2">{{ $t('test.completed') }}</h2>
+              <p class="text-body-2 text-grey mb-4">Your results are ready!</p>
+              <v-btn color="primary" size="large" :to="{ name: 'Results' }" prepend-icon="mdi-chart-line">
+                {{ $t('test.viewResults') }}
+              </v-btn>
+            </div>
+          </v-card-text>
         </v-card>
       </v-col>
     </v-row>
@@ -244,111 +276,130 @@ export default {
 </script>
 
 <style scoped>
-.rating-scale {
-  background: #f8f9fa;
+.test-card {
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.test-header {
+  background: linear-gradient(135deg, #1565C0 0%, #0D47A1 100%);
+}
+
+.progress-bar {
+  border-radius: 0;
+}
+
+.question-box {
+  background: linear-gradient(135deg, #f5f7fa 0%, #e8ecf1 100%);
   border-radius: 12px;
-  padding: 32px 24px;
+  padding: 20px;
+  border-left: 4px solid #1565C0;
+}
+
+.question-text {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #333;
+  margin: 0;
+  font-weight: 500;
+}
+
+.rating-scale {
+  background: #fafafa;
+  border-radius: 12px;
+  padding: 20px 16px;
 }
 
 .scale-options {
   display: flex;
-  justify-content: center;
-  align-items: stretch;
-  gap: 16px;
+  justify-content: space-between;
+  gap: 10px;
   width: 100%;
-  flex-wrap: wrap;
 }
 
 .scale-option {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 20px 16px;
-  min-width: 120px;
-  border-radius: 12px;
+  gap: 8px;
+  padding: 14px 8px;
+  min-width: 0;
+  flex: 1;
+  border-radius: 10px;
   border: 2px solid #e0e0e0;
   background: white;
   cursor: pointer;
   transition: all 0.2s ease;
-  flex: 1;
-  max-width: 160px;
 }
 
 .scale-option:hover {
   border-color: #1976d2;
-  background: #f5f5f5;
+  background: #f0f7ff;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .scale-option.selected {
   border-color: #1976d2;
   background: #e3f2fd;
-  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.2);
+  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.25);
 }
 
 .scale-radio {
-  transform: scale(1.5);
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-.scale-radio :deep(.v-selection-control__input) {
-  width: 24px;
-  height: 24px;
+.scale-radio :deep(.v-selection-control__wrapper) {
+  width: 22px;
+  height: 22px;
 }
 
 .scale-text {
-  font-size: 1rem;
+  font-size: 0.75rem;
   font-weight: 500;
-  color: #424242;
+  color: #555;
   text-align: center;
-  line-height: 1.3;
+  line-height: 1.2;
 }
 
 .scale-option.selected .scale-text {
-  color: #1976d2;
+  color: #1565C0;
   font-weight: 600;
 }
 
-@media (max-width: 960px) {
+/* Responsive */
+@media (max-width: 600px) {
   .scale-options {
-    gap: 12px;
+    flex-wrap: wrap;
+    gap: 8px;
   }
   
   .scale-option {
-    min-width: 100px;
-    padding: 16px 12px;
-    max-width: 140px;
+    flex: 0 0 calc(33.33% - 6px);
+    padding: 12px 6px;
+  }
+  
+  .scale-option:nth-child(4),
+  .scale-option:nth-child(5) {
+    flex: 0 0 calc(50% - 4px);
   }
   
   .scale-text {
-    font-size: 0.9rem;
+    font-size: 0.7rem;
+  }
+  
+  .question-text {
+    font-size: 0.95rem;
   }
 }
 
-@media (max-width: 600px) {
-  .rating-scale {
-    padding: 24px 16px;
-  }
-  
-  .scale-options {
-    gap: 8px;
-  }
-  
+@media (min-width: 601px) and (max-width: 960px) {
   .scale-option {
-    min-width: 80px;
-    padding: 14px 8px;
-    max-width: 120px;
-    gap: 8px;
+    padding: 12px 6px;
   }
   
   .scale-text {
-    font-size: 0.85rem;
-  }
-  
-  .scale-radio {
-    transform: scale(1.3);
+    font-size: 0.72rem;
   }
 }
 </style>

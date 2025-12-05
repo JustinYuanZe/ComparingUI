@@ -1,12 +1,12 @@
 <template>
-  <v-container class="py-8">
+  <v-container class="py-4">
     <v-row justify="center">
-      <v-col cols="12" md="10">
+      <v-col cols="12" md="10" lg="8">
         <!-- Header -->
-        <div class="text-center mb-8">
-          <v-icon size="64" color="primary" class="mb-4">mdi-frequently-asked-questions</v-icon>
-          <h1 class="text-h3 font-weight-bold mb-4">{{ $t('faq.title') }}</h1>
-          <p class="text-h6 text-grey">{{ $t('faq.subtitle') }}</p>
+        <div class="text-center mb-4">
+          <v-icon size="40" color="primary" class="mb-2">mdi-frequently-asked-questions</v-icon>
+          <h1 class="text-h5 font-weight-bold mb-1">{{ $t('faq.title') }}</h1>
+          <p class="text-body-2 text-grey">{{ $t('faq.subtitle') }}</p>
         </div>
 
         <!-- Search Bar -->
@@ -15,30 +15,25 @@
           :label="$t('faq.searchPlaceholder')"
           prepend-inner-icon="mdi-magnify"
           variant="outlined"
-          class="mb-6"
+          class="mb-4"
           clearable
-          density="comfortable"
+          density="compact"
           hide-details
         ></v-text-field>
 
         <!-- Category Chips -->
-        <div class="d-flex flex-wrap gap-2 mb-6">
+        <div class="d-flex flex-wrap gap-1 mb-4">
           <v-chip
             v-for="category in translatedCategories"
             :key="category.id"
             :color="selectedCategory === category.id ? 'primary' : 'default'"
             :variant="selectedCategory === category.id ? 'flat' : 'outlined'"
             @click="selectedCategory = selectedCategory === category.id ? null : category.id"
-            class="mr-2 mb-2"
+            size="small"
+            class="mr-1 mb-1"
           >
-            <v-icon start size="small">{{ category.icon }}</v-icon>
+            <v-icon start size="x-small">{{ category.icon }}</v-icon>
             {{ category.name }}
-            <v-badge
-              :content="getCategoryCount(category.id)"
-              inline
-              color="grey"
-              class="ml-2"
-            ></v-badge>
           </v-chip>
         </div>
 
@@ -47,21 +42,18 @@
           v-if="filteredFaqs.length === 0"
           type="info"
           variant="tonal"
-          class="mb-6"
+          density="compact"
+          class="mb-4"
         >
-          <div class="d-flex align-center">
-            <div>
-              <strong>{{ $t('faq.noResults') }}</strong>
-              <p class="mb-0 mt-1">{{ $t('faq.noResultsHint') }}</p>
-            </div>
-          </div>
+          <strong class="text-body-2">{{ $t('faq.noResults') }}</strong>
+          <p class="mb-0 text-caption">{{ $t('faq.noResultsHint') }}</p>
         </v-alert>
 
         <!-- FAQ Sections -->
-        <div v-for="category in categoriesWithFaqs" :key="category.id" class="mb-6">
-          <div class="d-flex align-center mb-3">
-            <v-icon :color="category.color" class="mr-2">{{ category.icon }}</v-icon>
-            <h2 class="text-h6 font-weight-bold mb-0">{{ category.name }}</h2>
+        <div v-for="category in categoriesWithFaqs" :key="category.id" class="mb-4">
+          <div class="d-flex align-center mb-2">
+            <v-icon :color="category.color" size="small" class="mr-2">{{ category.icon }}</v-icon>
+            <h2 class="text-body-1 font-weight-bold mb-0">{{ category.name }}</h2>
           </div>
           
           <v-expansion-panels variant="accordion" class="faq-panels">
@@ -69,74 +61,46 @@
               v-for="faq in category.faqs"
               :key="faq.id"
               elevation="1"
-              class="mb-2"
+              class="mb-1"
             >
-              <v-expansion-panel-title>
+              <v-expansion-panel-title class="py-2">
                 <div class="d-flex align-center">
-                  <v-icon size="small" color="primary" class="mr-3">mdi-help-circle-outline</v-icon>
-                  <span class="font-weight-medium">{{ faq.question }}</span>
+                  <v-icon size="x-small" color="primary" class="mr-2">mdi-help-circle-outline</v-icon>
+                  <span class="text-body-2 font-weight-medium">{{ faq.question }}</span>
                 </div>
               </v-expansion-panel-title>
               <v-expansion-panel-text>
-                <div class="faq-answer" v-html="faq.answer"></div>
+                <div class="faq-answer text-body-2" v-html="faq.answer"></div>
               </v-expansion-panel-text>
             </v-expansion-panel>
           </v-expansion-panels>
         </div>
 
         <!-- Quick Links Section -->
-        <v-card class="mb-6" elevation="2">
-          <v-card-title class="bg-primary text-white">
-            <v-icon class="mr-2">mdi-lightning-bolt</v-icon>
+        <v-card class="mb-4" elevation="1">
+          <v-card-title class="bg-primary text-white py-2 text-body-2">
+            <v-icon size="small" class="mr-2">mdi-lightning-bolt</v-icon>
             {{ $t('faq.quickActions') }}
           </v-card-title>
-          <v-card-text class="pa-4">
-            <v-row>
-              <v-col cols="12" sm="6" md="3">
-                <v-btn
-                  block
-                  color="primary"
-                  variant="tonal"
-                  :to="{ name: 'CareerTest' }"
-                  prepend-icon="mdi-clipboard-list"
-                  class="py-6"
-                >
+          <v-card-text class="pa-3">
+            <v-row dense>
+              <v-col cols="6" sm="3">
+                <v-btn block size="small" color="primary" variant="tonal" :to="{ name: 'CareerTest' }" prepend-icon="mdi-clipboard-list">
                   {{ $t('faq.takeTest') }}
                 </v-btn>
               </v-col>
-              <v-col cols="12" sm="6" md="3">
-                <v-btn
-                  block
-                  color="success"
-                  variant="tonal"
-                  :to="{ name: 'Results' }"
-                  prepend-icon="mdi-chart-bar"
-                  class="py-6"
-                >
+              <v-col cols="6" sm="3">
+                <v-btn block size="small" color="success" variant="tonal" :to="{ name: 'Results' }" prepend-icon="mdi-chart-bar">
                   {{ $t('faq.viewResults') }}
                 </v-btn>
               </v-col>
-              <v-col cols="12" sm="6" md="3">
-                <v-btn
-                  block
-                  color="info"
-                  variant="tonal"
-                  :to="{ name: 'Profile' }"
-                  prepend-icon="mdi-account"
-                  class="py-6"
-                >
+              <v-col cols="6" sm="3">
+                <v-btn block size="small" color="info" variant="tonal" :to="{ name: 'Profile' }" prepend-icon="mdi-account">
                   {{ $t('faq.myProfile') }}
                 </v-btn>
               </v-col>
-              <v-col cols="12" sm="6" md="3">
-                <v-btn
-                  block
-                  color="warning"
-                  variant="tonal"
-                  :to="{ name: 'Register' }"
-                  prepend-icon="mdi-account-plus"
-                  class="py-6"
-                >
+              <v-col cols="6" sm="3">
+                <v-btn block size="small" color="warning" variant="tonal" :to="{ name: 'Register' }" prepend-icon="mdi-account-plus">
                   {{ $t('faq.createAccount') }}
                 </v-btn>
               </v-col>
@@ -145,32 +109,22 @@
         </v-card>
 
         <!-- Still Need Help Section -->
-        <v-card elevation="3" class="help-card">
+        <v-card elevation="2" class="help-card">
           <v-row no-gutters>
-            <v-col cols="12" md="8" class="pa-6">
-              <h2 class="text-h5 font-weight-bold mb-3">{{ $t('faq.stillNeedHelp') }}</h2>
-              <p class="text-body-1 mb-4">{{ $t('faq.stillNeedHelpDesc') }}</p>
-              <div class="d-flex flex-wrap gap-3">
-                <v-btn
-                  color="primary"
-                  size="large"
-                  prepend-icon="mdi-robot"
-                  @click="openChatbot"
-                >
+            <v-col cols="12" md="8" class="pa-4">
+              <h2 class="text-body-1 font-weight-bold mb-2">{{ $t('faq.stillNeedHelp') }}</h2>
+              <p class="text-body-2 mb-3">{{ $t('faq.stillNeedHelpDesc') }}</p>
+              <div class="d-flex flex-wrap gap-2">
+                <v-btn color="primary" size="small" prepend-icon="mdi-robot" @click="openChatbot">
                   {{ $t('faq.chatWithAssistant') }}
                 </v-btn>
-                <v-btn
-                  variant="outlined"
-                  size="large"
-                  prepend-icon="mdi-email"
-                  href="mailto:chungsin.ipbi@gmail.com"
-                >
+                <v-btn variant="outlined" size="small" prepend-icon="mdi-email" href="mailto:chungsin.ipbi@gmail.com">
                   {{ $t('faq.emailSupport') }}
                 </v-btn>
               </div>
             </v-col>
             <v-col cols="12" md="4" class="d-none d-md-flex align-center justify-center bg-primary">
-              <v-icon size="120" color="white" class="opacity-80">mdi-face-agent</v-icon>
+              <v-icon size="64" color="white" class="opacity-80">mdi-face-agent</v-icon>
             </v-col>
           </v-row>
         </v-card>
@@ -273,31 +227,31 @@ export default {
 
 <style scoped>
 .faq-panels .v-expansion-panel {
-  border-radius: 8px !important;
-  margin-bottom: 8px;
+  border-radius: 6px !important;
+  margin-bottom: 4px;
 }
 
 .faq-panels .v-expansion-panel-title {
-  font-size: 1rem;
+  min-height: 40px;
 }
 
 .faq-answer {
-  padding: 8px 0;
-  line-height: 1.7;
+  padding: 4px 0;
+  line-height: 1.5;
 }
 
 .faq-answer :deep(p) {
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .faq-answer :deep(ul),
 .faq-answer :deep(ol) {
-  margin-bottom: 12px;
-  padding-left: 24px;
+  margin-bottom: 8px;
+  padding-left: 20px;
 }
 
 .faq-answer :deep(li) {
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .faq-answer :deep(strong) {
@@ -306,14 +260,14 @@ export default {
 
 .help-card {
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 8px;
+}
+
+.gap-1 {
+  gap: 4px;
 }
 
 .gap-2 {
   gap: 8px;
-}
-
-.gap-3 {
-  gap: 12px;
 }
 </style>

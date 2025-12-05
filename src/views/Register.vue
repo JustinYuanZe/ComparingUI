@@ -1,13 +1,13 @@
 <template>
-  <v-container class="fill-height">
+  <v-container class="py-4">
     <v-row justify="center" align="center">
-      <v-col cols="12" sm="8" md="6">
-        <v-card class="elevation-12">
-          <v-toolbar color="primary" dark flat>
-            <v-toolbar-title>{{ $t('auth.registerTitle') }}</v-toolbar-title>
-          </v-toolbar>
-          <v-card-text>
-            <p class="text-body-2 text-grey mb-4">{{ $t('auth.registerSubtitle') }}</p>
+      <v-col cols="12" sm="8" md="5" lg="4">
+        <v-card elevation="2">
+          <div class="bg-primary pa-3 text-center">
+            <span class="text-white text-body-1 font-weight-bold">{{ $t('auth.registerTitle') }}</span>
+          </div>
+          <v-card-text class="pa-4">
+            <p class="text-body-2 text-grey mb-3">{{ $t('auth.registerSubtitle') }}</p>
             <v-form ref="form" @submit.prevent="handleRegister" v-model="valid">
               <v-text-field 
                 v-model="username" 
@@ -15,7 +15,8 @@
                 prepend-icon="mdi-account" 
                 type="text"
                 :rules="usernameRules"
-                :counter="50"
+                density="compact"
+                variant="outlined"
                 required></v-text-field>
               <v-text-field 
                 v-model="password" 
@@ -25,6 +26,8 @@
                 :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                 @click:append="showPassword = !showPassword"
                 :rules="passwordRules"
+                density="compact"
+                variant="outlined"
                 required></v-text-field>
               <v-text-field 
                 v-model="confirmPassword" 
@@ -34,6 +37,8 @@
                 :append-icon="showConfirmPassword ? 'mdi-eye' : 'mdi-eye-off'"
                 @click:append="showConfirmPassword = !showConfirmPassword"
                 :rules="confirmPasswordRules"
+                density="compact"
+                variant="outlined"
                 required></v-text-field>
               <v-select 
                 v-model="department" 
@@ -41,23 +46,25 @@
                 :label="$t('auth.department')" 
                 prepend-icon="mdi-school"
                 :rules="requiredRules"
+                density="compact"
+                variant="outlined"
                 required></v-select>
               
-              <v-radio-group v-model="identity" row>
+              <v-radio-group v-model="identity" inline density="compact" class="mt-1">
                 <template v-slot:label>
-                  <span class="text-body-2">{{ $t('profile.identity') }}</span>
+                  <span class="text-caption">{{ $t('profile.identity') }}</span>
                 </template>
-                <v-radio :label="$t('profile.student')" value="student"></v-radio>
-                <v-radio :label="$t('profile.unemployed')" value="Unemployed"></v-radio>
-                <v-radio :label="$t('profile.employed')" value="employed"></v-radio>
+                <v-radio :label="$t('profile.student')" value="student" density="compact"></v-radio>
+                <v-radio :label="$t('profile.unemployed')" value="Unemployed" density="compact"></v-radio>
+                <v-radio :label="$t('profile.employed')" value="employed" density="compact"></v-radio>
               </v-radio-group>
 
-              <v-radio-group v-model="gender" row>
+              <v-radio-group v-model="gender" inline density="compact" class="mt-1">
                 <template v-slot:label>
-                  <span class="text-body-2">{{ $t('profile.gender') }}</span>
+                  <span class="text-caption">{{ $t('profile.gender') }}</span>
                 </template>
-                <v-radio :label="$t('profile.female')" value="female"></v-radio>
-                <v-radio :label="$t('profile.male')" value="male"></v-radio>
+                <v-radio :label="$t('profile.female')" value="female" density="compact"></v-radio>
+                <v-radio :label="$t('profile.male')" value="male" density="compact"></v-radio>
               </v-radio-group>
 
               <v-text-field 
@@ -65,17 +72,19 @@
                 :label="$t('profile.email')" 
                 prepend-icon="mdi-email"
                 type="email"
-                :rules="emailRules"></v-text-field>
+                :rules="emailRules"
+                density="compact"
+                variant="outlined"></v-text-field>
 
               <div class="text-center mt-3">
-                <v-btn color="primary" type="submit" :loading="loading" block size="large">
+                <v-btn color="primary" type="submit" :loading="loading" block>
                   {{ loading ? $t('auth.registering') : $t('auth.registerButton') }}
                 </v-btn>
               </div>
             </v-form>
-            <div class="text-center mt-4">
-              <span class="text-grey">{{ $t('auth.haveAccount') }}</span>
-              <router-link to="/login" class="ml-1">{{ $t('auth.loginNow') }}</router-link>
+            <div class="text-center mt-3">
+              <span class="text-caption text-grey">{{ $t('auth.haveAccount') }}</span>
+              <router-link to="/login" class="ml-1 text-caption">{{ $t('auth.loginNow') }}</router-link>
             </div>
           </v-card-text>
         </v-card>

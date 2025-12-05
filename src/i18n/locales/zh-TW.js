@@ -44,9 +44,9 @@ export default {
   // Auth - 帳號驗證
   auth: {
     loginTitle: '會員登入',
-    loginSubtitle: '歡迎回來！請輸入您的帳號密碼',
+    loginSubtitle: '歡迎回來！請輸入你的帳號密碼',
     registerTitle: '加入會員',
-    registerSubtitle: '立即加入，開啟您的職涯探索之旅',
+    registerSubtitle: '立即加入，開啟你的職涯探索之旅',
     username: '帳號',
     password: '密碼',
     confirmPassword: '確認密碼',
@@ -104,7 +104,7 @@ export default {
     creativeCareers: 'UI/UX 設計師、前端工程師、數位內容創作者、網頁設計師',
     interdisciplinary: '跨域創新',
     interdisciplinaryTitle: '新興科技應用',
-    interdisciplinaryDesc: '在跨領域的交會點發光！將科技帶入醫療、教育等領域，開創無限可能。',
+    interdisciplinaryDesc: '在不同領域的交會點發光發熱！將科技帶入醫療、教育等領域，開創無限可能。',
     interdisciplinaryCareers: '科技創業家、創新顧問、教育科技開發者、醫療科技專家',
     ctaTitle: '準備好探索你的職涯方向了嗎？',
     ctaSubtitle: '只要 10 分鐘，免費獲得專屬於你的職涯建議',
@@ -168,9 +168,9 @@ export default {
     ],
     interdisciplinaryTips: [
       '探索科技與其他領域結合的新興機會',
-      '訓練跨領域溝通能力，學會用不同受眾的語言表達',
+      '練習跨領域溝通，學會用對方聽得懂的方式表達',
       '關注科技如何改變各產業的最新趨勢',
-      '培養跨領域的 T 型人才技能組合',
+      '培養 T 型人才的跨領域技能組合',
     ],
   },
 
@@ -193,7 +193,7 @@ export default {
     day: '日',
     email: 'Email',
     mobilePhone: '手機',
-    enrollmentInfo: '學籍資料',
+    enrollmentInfo: '就學資訊',
     enrollmentYear: '入學年度',
     enrollmentLevel: '年級',
     schoolCity: '學校所在縣市',
@@ -219,7 +219,7 @@ export default {
     title: '關於我們',
     subtitle: '認識我們的職涯探索平台',
     missionTitle: '我們的使命',
-    missionText: '我們致力於運用科學化的評估工具與個人化的指導，幫助每一位學生和職場人士找到最適合自己的職涯方向。透過結合心理測量專業與現代科技，我們希望讓每個人都能在職涯道路上做出更有信心的選擇。',
+    missionText: '我們運用科學化的評估工具與個人化的指導，幫助學生和職場人士找到最適合自己的職涯方向。結合心理測量專業與現代科技，讓每個人都能在職涯選擇上更有信心。',
     whatWeOfferTitle: '我們提供的服務',
     offer1Title: '職涯性向測驗',
     offer1Desc: '專業設計的評估測驗，幫助你了解自己的興趣、能力與人格特質',
@@ -341,10 +341,10 @@ export default {
     q10: '分數代表什麼意思？',
     a10: `<p>每個領域都會有一個<strong>適合度百分比</strong>：</p>
       <ul>
-        <li><strong>75-100%：</strong>超級適合！這個領域跟你的特質高度吻合</li>
-        <li><strong>50-74%：</strong>滿適合的，值得進一步探索</li>
-        <li><strong>25-49%：</strong>普通適合，某些面向可能吸引你</li>
-        <li><strong>0-24%：</strong>可能不太適合，但不代表完全不行</li>
+        <li><strong>75-100%：</strong>超適合！這個領域跟你的特質高度吻合</li>
+        <li><strong>50-74%：</strong>蠻適合的，值得進一步探索</li>
+        <li><strong>25-49%：</strong>還可以，某些面向可能會吸引你</li>
+        <li><strong>0-24%：</strong>可能不太適合，但也不是完全不行</li>
       </ul>`,
     q11: '結果可以下載嗎？',
     a11: `<p><strong>可以！</strong>在結果頁面點選「下載報告」，就能把你的職涯分析報告存成文字檔保留。</p>`,
@@ -388,17 +388,17 @@ export default {
         <li>數位設計與多媒體</li>
         <li>跨域創新與新興科技</li>
       </ol>`,
-    q19: '想更了解某個職業，可以怎麼做？',
-    a19: `<p>直接問 AI 職涯顧問最快！你也可以上 LinkedIn、104、Glassdoor 看看實際的職缺描述和業界分享。</p>`,
+    q19: '想深入了解某個職業，該怎麼做？',
+    a19: `<p>直接問 AI 職涯顧問最快！也可以上 LinkedIn、104 人力銀行、Glassdoor 看看實際的職缺和業界分享。</p>`,
     q20: '平台能幫忙準備面試嗎？',
-    a20: `<p><strong>可以！</strong>問 AI 顧問就對了，可以問：常見面試題目、技術面試準備方法、行為面試技巧（STAR 法則）、薪資談判等等。</p>`,
+    a20: `<p><strong>可以！</strong>問 AI 顧問就對了，可以問常見面試題目、技術面試準備、行為面試技巧、薪資談判等等。</p>`,
   },
 
   // Chatbot - AI 顧問
   chatbot: {
     title: 'AI 職涯顧問',
     welcome: '嗨！我是你的 AI 職涯顧問',
-    welcomeDesc: '我可以幫你探索職涯方向、準備面試，還有規劃專業發展，有什麼想問的儘管說！',
+    welcomeDesc: '我可以幫你探索職涯方向、準備面試、規劃專業發展，有問題儘管問！',
     tryAsking: '你可以這樣問我：',
     placeholder: '輸入訊息...',
     thinking: '思考中...',

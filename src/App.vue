@@ -12,15 +12,14 @@
     </div>
 
     <!-- Main Navigation Header -->
-    <v-app-bar color="white" class="main-header" elevation="2" height="80">
-      <v-container fluid class="px-6">
+    <v-app-bar color="white" class="main-header" elevation="1" height="56">
+      <v-container fluid class="px-4">
         <v-row align="center" no-gutters>
           <v-col cols="auto" class="d-flex align-center">
             <div class="logo-section" @click="$router.push({ name: 'Home' })" style="cursor: pointer;">
-              <img :src="logo" alt="Advisory System logo" height="50" width="50" class="mr-4" />
+              <img :src="logo" alt="Advisory System logo" height="36" width="36" class="mr-3" />
               <div class="logo-text">
-                <div class="text-h5 font-weight-bold blue-primary--text">{{ $t('common.appName') }}</div>
-                <div class="text-caption text--secondary">{{ $t('common.tagline') }}</div>
+                <div class="text-subtitle-1 font-weight-bold blue-primary--text">{{ $t('common.appName') }}</div>
               </div>
             </div>
           </v-col>
@@ -29,18 +28,18 @@
 
           <v-col cols="auto">
             <div class="nav-menu d-flex align-center">
-              <v-btn v-for="item in menuItems" :key="item.key" :to="item.to" variant="text" class="nav-btn mx-2"
-                size="large">
+              <v-btn v-for="item in menuItems" :key="item.key" :to="item.to" variant="text" class="nav-btn mx-1"
+                size="small">
                 {{ $t(item.labelKey) }}
               </v-btn>
 
               <!-- Language Switcher -->
               <v-menu>
                 <template v-slot:activator="{ props }">
-                  <v-btn v-bind="props" variant="text" class="nav-btn mx-2">
-                    <v-icon class="mr-1">mdi-earth</v-icon>
+                  <v-btn v-bind="props" variant="text" class="nav-btn mx-1" size="small">
+                    <v-icon size="small" class="mr-1">mdi-earth</v-icon>
                     {{ currentLocaleName }}
-                    <v-icon size="small" class="ml-1">mdi-chevron-down</v-icon>
+                    <v-icon size="x-small" class="ml-1">mdi-chevron-down</v-icon>
                   </v-btn>
                 </template>
                 <v-list density="compact">
@@ -51,8 +50,8 @@
                     :active="currentLocale === lang.code"
                   >
                     <template v-slot:prepend>
-                      <v-icon v-if="currentLocale === lang.code" color="primary">mdi-check</v-icon>
-                      <v-icon v-else></v-icon>
+                      <v-icon v-if="currentLocale === lang.code" color="primary" size="small">mdi-check</v-icon>
+                      <v-icon v-else size="small"></v-icon>
                     </template>
                     <v-list-item-title>{{ lang.name }}</v-list-item-title>
                   </v-list-item>
@@ -61,18 +60,18 @@
 
               <!-- Auth buttons -->
               <template v-if="!auth.isLoggedIn">
-                <v-btn :to="{ name: 'Login' }" variant="outlined" color="primary" class="mx-2">
+                <v-btn :to="{ name: 'Login' }" variant="outlined" color="primary" size="small" class="mx-1">
                   {{ $t('nav.login') }}
                 </v-btn>
-                <v-btn :to="{ name: 'Register' }" color="primary" class="mx-2">
+                <v-btn :to="{ name: 'Register' }" color="primary" size="small" class="mx-1">
                   {{ $t('nav.register') }}
                 </v-btn>
               </template>
               <template v-else>
                 <v-menu>
                   <template v-slot:activator="{ props }">
-                    <v-btn v-bind="props" variant="text" class="nav-btn mx-2">
-                      <v-icon class="mr-2">mdi-account-circle</v-icon>
+                    <v-btn v-bind="props" variant="text" class="nav-btn mx-1" size="small">
+                      <v-icon size="small" class="mr-1">mdi-account-circle</v-icon>
                       {{ auth.user.username }}
                     </v-btn>
                   </template>
@@ -98,20 +97,19 @@
       <router-view @show-snackbar="showSnackbar"></router-view>
     </v-main>
 
-    <v-footer class="main-footer" color="white">
-      <v-container fluid class="px-6">
-        <v-row>
+    <v-footer v-if="$route.name === 'Home'" class="main-footer" color="white">
+      <v-container fluid class="px-4 py-3">
+        <v-row dense>
           <v-col cols="12" md="4">
-            <div class="footer-logo mb-4">
-              <img :src="logo" alt="Advisory System logo" height="40" width="40" class="mb-2" />
-              <div class="text-subtitle-1 font-weight-bold">{{ $t('common.appName') }}</div>
-              <div class="text-caption text--secondary">{{ $t('common.tagline') }}</div>
+            <div class="footer-logo mb-2">
+              <img :src="logo" alt="Advisory System logo" height="28" width="28" class="mb-1" />
+              <div class="text-body-2 font-weight-bold">{{ $t('common.appName') }}</div>
             </div>
           </v-col>
 
-          <v-col cols="12" md="4">
+          <v-col cols="6" md="4">
             <div class="footer-section">
-              <h4 class="text-subtitle-1 font-weight-bold mb-3">{{ $t('footer.aboutPlatform') }}</h4>
+              <h4 class="text-body-2 font-weight-bold mb-2">{{ $t('footer.aboutPlatform') }}</h4>
               <div class="footer-links">
                 <router-link to="/about" class="footer-link">{{ $t('nav.about') }}</router-link>
                 <router-link to="/faq" class="footer-link">{{ $t('nav.faq') }}</router-link>
@@ -119,11 +117,10 @@
             </div>
           </v-col>
 
-          <v-col cols="12" md="4">
+          <v-col cols="6" md="4">
             <div class="footer-section">
-              <h4 class="text-subtitle-1 font-weight-bold mb-3">{{ $t('footer.services') }}</h4>
+              <h4 class="text-body-2 font-weight-bold mb-2">{{ $t('footer.services') }}</h4>
               <div class="footer-links">
-                <router-link to="/profile" class="footer-link">{{ $t('footer.careerExploration') }}</router-link>
                 <router-link to="/career-test" class="footer-link">{{ $t('footer.skillsAssessment') }}</router-link>
                 <router-link to="/results" class="footer-link">{{ $t('footer.learningRecommendations') }}</router-link>
               </div>
@@ -131,10 +128,10 @@
           </v-col>
         </v-row>
 
-        <v-divider class="my-4"></v-divider>
+        <v-divider class="my-2"></v-divider>
 
         <v-row align="center">
-          <v-col cols="12" class="text-center">
+          <v-col cols="12" class="text-center py-1">
             <div class="text-caption text--secondary">
               {{ $t('common.copyright') }}
             </div>
@@ -227,9 +224,10 @@ export default {
 /* Top banner styles */
 .top-banner {
   background: linear-gradient(135deg, #1565C0 0%, #0D47A1 100%);
-  min-height: 32px;
+  min-height: 24px;
   display: flex;
   align-items: center;
+  padding: 2px 0;
 }
 
 /* Main header styles */
@@ -269,7 +267,7 @@ export default {
 .main-footer {
   background: #ffffff;
   border-top: 1px solid rgba(0, 0, 0, 0.08);
-  padding: 40px 0 20px 0;
+  padding: 12px 0 8px 0;
 }
 
 .footer-logo {
@@ -280,21 +278,21 @@ export default {
 
 .footer-section h4 {
   color: #212121;
-  border-bottom: 2px solid #1565C0;
-  padding-bottom: 8px;
-  margin-bottom: 16px;
+  border-bottom: 1px solid #1565C0;
+  padding-bottom: 4px;
+  margin-bottom: 8px;
 }
 
 .footer-links {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
 }
 
 .footer-link {
   color: #666;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 12px;
   transition: color 0.3s ease;
 }
 
@@ -319,15 +317,15 @@ export default {
   }
 
   .footer-section {
-    margin-bottom: 24px;
+    margin-bottom: 12px;
   }
 
   .main-header {
-    height: 64px !important;
+    height: 48px !important;
   }
 
-  .logo-text .text-h5 {
-    font-size: 1.25rem !important;
+  .logo-text .text-subtitle-1 {
+    font-size: 0.9rem !important;
   }
 }
 </style>
